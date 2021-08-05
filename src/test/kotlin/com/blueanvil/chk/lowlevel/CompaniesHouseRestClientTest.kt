@@ -25,14 +25,17 @@ class CompaniesHouseRestClientTest {
 
     @Test
     fun parallelism() {
-        val companyNumber = "02685120"
-        val count = client.allResults("/company/$companyNumber/officers").count()
+        val pagedResource = "/company/02685120/officers"
+
+        val count = client.allResults(pagedResource).count()
         println("Found $count officers with regular fetch")
+
         val parallelCount = AtomicLong(0)
-        client.allResults("/company/$companyNumber/officers", 4) { appts ->
-            appts.forEach { parallelCount.incrementAndGet() }
+        client.allResults(pagedResource, 4) { appts ->
+            parallelCount.addAndGet(appts.size.toLong())
         }
         println("Found ${parallelCount.get()} officers with parallel fetch")
+
         assertEquals(count.toLong(), parallelCount.get())
     }
 }
