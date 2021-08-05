@@ -43,15 +43,3 @@ coveralls {
     sourceDirs += ['src/main/kotlin']
     jacocoReportPath 'build/reports/jacoco/test/jacocoTestReport.xml'
 }
-
-task vocabulary(type: JavaExec) {
-    group = "Execution"
-    classpath = sourceSets.main.runtimeClasspath
-    main = "org.openownership.rdf.vocabulary.BodsVocabularyGeneratorApp"
-}
-
-task jsonlToRdf(type: JavaExec) {
-    group = "Execution"
-    classpath = sourceSets.main.runtimeClasspath
-    main = "org.openownership.rdf.data.BodsJsonToRdfApp"
-}
