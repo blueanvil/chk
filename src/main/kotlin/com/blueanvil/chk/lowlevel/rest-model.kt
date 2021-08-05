@@ -26,7 +26,7 @@ data class ApiRequest(val apiKey: String,
     }
 
     companion object {
-        private const val REST_ENDPOINT = "https://api.companieshouse.gov.uk/"
+        private const val REST_ENDPOINT = "https://api.company-information.service.gov.uk/"
     }
 }
 

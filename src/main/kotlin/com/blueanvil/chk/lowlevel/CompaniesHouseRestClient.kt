@@ -96,7 +96,8 @@ class CompaniesHouseRestClient(private val apiKey: String,
         const val RESULTS_PER_PAGE = 50
 
         private fun defaultBucket(): BlockingBucket {
-            val limit = Bandwidth.simple(240, Duration.ofMinutes(2))
+            // See https://developer.company-information.service.gov.uk/developer-guidelines
+            val limit = Bandwidth.simple(590, Duration.ofMinutes(5))
             return Bucket4j.builder().addLimit(limit).build().asScheduler()
         }
     }
