@@ -21,7 +21,7 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.2.3'
     implementation 'ch.qos.logback:logback-core:1.2.3'
     implementation 'com.squareup.okhttp3:okhttp:4.8.0'
-    implementation 'com.beust:klaxon:5.0.1'
+    implementation 'com.beust:klaxon:5.5'
     implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:6.2.0'
 
     testImplementation 'org.testng:testng:7.1.0'
