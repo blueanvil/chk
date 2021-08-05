@@ -3,11 +3,17 @@ package com.blueanvil.chk.client
 import com.beust.klaxon.JsonObject
 import com.blueanvil.chk.lowlevel.ChJson
 import com.blueanvil.chk.lowlevel.OfficerData
+import com.blueanvil.chk.lowlevel.REGEX_OFFICER_LINK
 import com.blueanvil.chk.tidySpaces
 
 /**
  * @author Cosmin Marginean
  */
+data class CompanyInfo(val name: String,
+                       val companyNumber: String?,
+                       val companyStatus: String?,
+                       val officerData: OfficerData?)
+
 data class Address(var premises: String? = null,
                    var addressLine1: String? = null,
                    var addressLine2: String? = null,
@@ -52,11 +58,26 @@ fun address(jsonRecord: JsonObject): Address {
     return address
 }
 
-fun officerData(searchResult: JsonObject): OfficerData? {
-    val officerId = ChJson.officerId(searchResult)
+fun JsonObject.officerId(): String? {
+    val selfLink = obj(ChJson.LINKS)?.string(ChJson.SELF)
+    val officerAppts = obj(ChJson.LINKS)?.obj(ChJson.OFFICER)?.string(ChJson.APPOINTMENTS)
+
+    val finalLink = selfLink ?: officerAppts
+    if (finalLink != null && finalLink.matches(REGEX_OFFICER_LINK)) {
+        return finalLink.replace(REGEX_OFFICER_LINK, "$1")
+    }
+
+    return null
+}
+
+fun JsonObject.officerData(): OfficerData? {
+    val officerId = officerId()
     if (officerId != null) {
-        return OfficerData(officerId, searchResult.int(ChJson.APPT_COUNT) ?: 0)
+        return OfficerData(officerId, int(ChJson.APPT_COUNT) ?: 0)
     }
     return null
 }
+
+fun JsonObject.name() = ChJson.nameFields.map { string(it) }.first { it != null }!!
+fun JsonObject.officerRegNo() = obj(ChJson.IDENTIFICATION)?.string(ChJson.REG_NO)
 

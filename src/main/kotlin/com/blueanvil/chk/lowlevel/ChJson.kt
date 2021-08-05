@@ -2,7 +2,6 @@ package com.blueanvil.chk.lowlevel
 
 import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Parser
-import java.io.StringReader
 
 /**
  * @author Cosmin Marginean
@@ -47,27 +46,4 @@ object ChJson {
     const val OFFICER = "officer"
     const val IDENTIFICATION = "identification"
     const val REG_NO = "registration_number"
-
-    private val REGEX_OFFICER_LINK = "/officers/(.*)/appointments".toRegex()
-    private val REGEX_COMPANY = "/company/(.*)".toRegex()
-
-    fun name(jsonRecord: JsonObject): String {
-        return nameFields.map { jsonRecord.string(it) }.first { it != null }!!
-    }
-
-    fun officerRegNo(apptRecord: JsonObject): String? {
-        return apptRecord.obj(IDENTIFICATION)?.string(REG_NO)
-    }
-
-    fun officerId(searchResult: JsonObject): String? {
-        val selfLink = searchResult.obj(LINKS)?.string(SELF)
-        val officerAppts = searchResult.obj(LINKS)?.obj(OFFICER)?.string(APPOINTMENTS)
-
-        val finalLink = selfLink ?: officerAppts
-        if (finalLink != null && finalLink.matches(REGEX_OFFICER_LINK)) {
-            return finalLink.replace(REGEX_OFFICER_LINK, "$1")
-        }
-
-        return null
-    }
 }

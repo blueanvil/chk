@@ -7,18 +7,18 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import org.slf4j.LoggerFactory
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 import java.time.Duration
 import java.time.temporal.ChronoUnit
 
 /**
  * @author Cosmin Marginean
  */
-private val httpLog = LoggerFactory.getLogger(OkHttpClient::class.java)
 internal val klaxonJsonParser = Parser.default()
 
-internal fun String.tidySpaces(): String {
-    return replace("\\s+".toRegex(), " ").trim()
-}
+internal fun String.tidySpaces() = replace("\\s+".toRegex(), " ").trim()
+internal fun String.utf8UrlEncode() = URLEncoder.encode(this, StandardCharsets.UTF_8.name())
 
 internal fun httpClient() = OkHttpClient().newBuilder()
         .connectTimeout(Duration.of(120, ChronoUnit.SECONDS))

@@ -13,6 +13,9 @@ import java.io.StringReader
 /**
  * @author Cosmin Marginean
  */
+internal val REGEX_OFFICER_LINK = "/officers/(.*)/appointments".toRegex()
+internal val REGEX_COMPANY = "/company/(.*)".toRegex()
+
 data class ApiRequest(val apiKey: String,
                       val bucket: BlockingBucket,
                       val resource: String) {
