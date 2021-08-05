@@ -27,7 +27,6 @@ data class ApiRequest(val apiKey: String,
 
     companion object {
         private const val REST_ENDPOINT = "https://api.companieshouse.gov.uk/"
-        private val log = LoggerFactory.getLogger(ApiRequest::class.java)
     }
 }
 

@@ -16,10 +16,10 @@ class CompaniesHouseRestClient(private val apiKey: String,
         return ApiRequest(apiKey, bucket, resource)
     }
 
-    fun allResults(resource: String, itemsPerPage: Int = RESULTS_PER_PAGE): Sequence<JsonObject> {
+    fun allResults(pagedResource: String, itemsPerPage: Int = RESULTS_PER_PAGE): Sequence<JsonObject> {
         return allResults { startIndex ->
-            val appendChar = if (resource.contains("?")) "&" else "?"
-            val response = request(resource + "${appendChar}items_per_page=${itemsPerPage}&start_index=${startIndex}").get()
+            val appendChar = if (pagedResource.contains("?")) "&" else "?"
+            val response = request(pagedResource + "${appendChar}items_per_page=${itemsPerPage}&start_index=${startIndex}").get()
             PagedResponse(response)
         }
     }

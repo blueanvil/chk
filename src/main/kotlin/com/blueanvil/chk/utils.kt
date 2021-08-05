@@ -25,25 +25,13 @@ internal fun httpClient() = OkHttpClient().newBuilder()
         .readTimeout(Duration.of(120, ChronoUnit.SECONDS))
         .build()
 
-internal fun OkHttpClient.get(url: String,
-                              headers: Map<String, String> = emptyMap(),
-                              successCodes: List<Int> = listOf(200)): Response {
+internal fun OkHttpClient.get(url: String, headers: Map<String, String> = emptyMap()): Response {
     val request = Request.Builder()
             .url(url)
             .get()
             .headers(headers.toHeaders())
             .build()
-    return runAndCheck(request, successCodes, url)
-}
-
-private fun OkHttpClient.runAndCheck(request: Request, successCodes: List<Int>, url: String): Response {
-    val response = newCall(request).execute()
-    if (response.code !in successCodes) {
-        val message = "HTTP Error at $url: $response.code. Response is: \n${response.text()}"
-        httpLog.error(message)
-        throw RuntimeException(message)
-    }
-    return response
+    return newCall(request).execute()
 }
 
 fun Response.text(): String {
