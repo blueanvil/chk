@@ -12,7 +12,7 @@ import com.blueanvil.chk.officerId
 data class CompanyInfo(val name: String,
                        val companyNumber: String?,
                        val companyStatus: String?,
-                       val officerId: String,
+                       val officerId: String?,
                        val numberOfAppointments: Int,
                        val address: Address?) {
 
@@ -20,7 +20,7 @@ data class CompanyInfo(val name: String,
             name = record.name(),
             companyNumber = record.string(ChJson.COMPANY_NUMBER).fixCompanyNumber(),
             companyStatus = record.string(ChJson.COMPANY_STATUS),
-            officerId = record.officerId()!!,
+            officerId = record.officerId(),
             numberOfAppointments = record.int(ChJson.APPT_COUNT) ?: 0,
             address = Address.fromRecord(record))
 }
