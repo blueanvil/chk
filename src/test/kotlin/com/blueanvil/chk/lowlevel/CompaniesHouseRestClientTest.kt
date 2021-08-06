@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicLong
  */
 class CompaniesHouseRestClientTest {
 
-    private val apiKey = System.getProperty("chTestApiKey")
+    private val apiKey = System.getenv("chTestApiKey")
     private val client = CompaniesHouseRestClient(apiKey)
 
     @Test

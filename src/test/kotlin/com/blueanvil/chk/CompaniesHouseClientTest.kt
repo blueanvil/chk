@@ -8,19 +8,7 @@ import org.testng.annotations.Test
  */
 class CompaniesHouseClientTest {
 
-    companion object {
-        init {
-            println("SYSPROPS")
-            System.getProperties()
-                    .forEach { t, u -> println("$t -> $u") }
-
-            println("ENV")
-            System.getenv()
-                    .forEach { t, u -> println("$t -> $u") }
-        }
-    }
-
-    private val apiKey = System.getProperty("chTestApiKey")
+    private val apiKey = System.getenv("chTestApiKey")
     private val client = CompaniesHouseClient(apiKey)
 
     @Test
