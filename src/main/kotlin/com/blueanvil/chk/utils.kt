@@ -6,17 +6,18 @@ import okhttp3.Headers.Companion.toHeaders
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
-import org.slf4j.LoggerFactory
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.time.Duration
+import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
 /**
  * @author Cosmin Marginean
  */
 internal val klaxonJsonParser = Parser.default()
-
+internal val DATE_FMT_DASH_YMD = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+internal val HTTP_OK = 200
 internal fun String.tidySpaces() = replace("\\s+".toRegex(), " ").trim()
 internal fun String.utf8UrlEncode() = URLEncoder.encode(this, StandardCharsets.UTF_8.name())
 
@@ -44,3 +45,6 @@ fun Response.json(): JsonObject {
     return klaxonJsonParser.parse(StringBuilder(text())) as JsonObject
 }
 
+fun String?.fixCompanyNumber(): String? {
+    return this?.padStart(8, '0') ?: null
+}

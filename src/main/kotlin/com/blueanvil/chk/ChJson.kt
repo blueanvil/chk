@@ -1,16 +1,9 @@
-package com.blueanvil.chk.lowlevel
-
-import com.beust.klaxon.JsonObject
-import com.beust.klaxon.Parser
+package com.blueanvil.chk
 
 /**
  * @author Cosmin Marginean
  */
 object ChJson {
-
-    private val jsonParser = Parser.default()
-
-    const val RESULTS_PER_PAGE = 50
 
     const val TOTAL_RESULTS = "total_results"
     const val START_INDEX = "start_index"

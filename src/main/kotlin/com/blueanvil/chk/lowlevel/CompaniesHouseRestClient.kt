@@ -1,6 +1,7 @@
 package com.blueanvil.chk.lowlevel
 
 import com.beust.klaxon.JsonObject
+import com.blueanvil.chk.HTTP_OK
 import io.github.bucket4j.Bandwidth
 import io.github.bucket4j.BlockingBucket
 import io.github.bucket4j.Bucket4j
@@ -45,25 +46,27 @@ class CompaniesHouseRestClient(private val apiKey: String,
 
     private fun pagedGet(pagedResource: String, startIndex: Int): PagedResponse {
         val appendChar = if (pagedResource.contains("?")) "&" else "?"
-        val response = request(pagedResource + "${appendChar}items_per_page=${RESULTS_PER_PAGE}&start_index=${startIndex}").get()
+        val resource = pagedResource + "${appendChar}items_per_page=${RESULTS_PER_PAGE}&start_index=${startIndex}"
+        val response = request(resource).get(HTTP_OK)
         return PagedResponse(response)
     }
 
     private fun allResults(fetchPage: (Int) -> PagedResponse): Sequence<JsonObject> {
         val firstResponse = fetchPage(0)
-        if (firstResponse.totalResults == 0) {
+        val totalResults = firstResponse.totalResults.coerceAtMost(MAX_RESULTS)
+        if (totalResults == 0) {
             return emptySequence()
         }
 
         var page = firstResponse.items
         var currentIndex = 0
         return generateSequence {
-            if (currentIndex == firstResponse.totalResults) {
+            if (currentIndex == totalResults) {
                 null
             } else {
-                val currentElement = page[currentIndex % ChJson.RESULTS_PER_PAGE]
+                val currentElement = page[currentIndex % RESULTS_PER_PAGE]
                 currentIndex++
-                if (currentIndex < firstResponse.totalResults && currentIndex % ChJson.RESULTS_PER_PAGE == 0) {
+                if (currentIndex < totalResults && currentIndex % RESULTS_PER_PAGE == 0) {
                     page = fetchPage(currentIndex).items
                 }
 
@@ -80,10 +83,10 @@ class CompaniesHouseRestClient(private val apiKey: String,
         val firstResponse = fetchPage(0)
         if (firstResponse.totalResults > 0) {
             threadPool.submit { handleItems(firstResponse.items) }
-            val pageCount = firstResponse.totalResults / ChJson.RESULTS_PER_PAGE + 1
+            val pageCount = firstResponse.totalResults.coerceAtMost(MAX_RESULTS) / RESULTS_PER_PAGE + 1
             (1 until pageCount).map { pageIndex ->
                 val future = threadPool.submit {
-                    val items = fetchPage(pageIndex * ChJson.RESULTS_PER_PAGE).items
+                    val items = fetchPage(pageIndex * RESULTS_PER_PAGE).items
                     handleItems(items)
                 }
                 futures.add(future)
@@ -94,6 +97,7 @@ class CompaniesHouseRestClient(private val apiKey: String,
 
     companion object {
         const val RESULTS_PER_PAGE = 50
+        const val MAX_RESULTS = 1000
 
         internal fun defaultBucket(): BlockingBucket {
             // See https://developer.company-information.service.gov.uk/developer-guidelines
