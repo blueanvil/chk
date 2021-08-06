@@ -1,7 +1,10 @@
 package com.blueanvil.chk.model
 
 import com.beust.klaxon.JsonObject
-import com.blueanvil.chk.*
+import com.blueanvil.chk.ChJson
+import com.blueanvil.chk.fixCompanyNumber
+import com.blueanvil.chk.officerId
+import com.blueanvil.chk.officerRegNo
 
 data class Officer(val name: String,
                    val officerId: String?,
@@ -13,9 +16,9 @@ data class Officer(val name: String,
                    val nationality: String?,
                    val resignedOn: PartialDate?,
 
-                   val companyNumber: String,
-                   val companyName: String,
-                   val companyStatus: String,
+                   val companyNumber: String?,
+                   val companyName: String?,
+                   val companyStatus: String?,
                    val officerCompanyNumber: String?) {
 
     constructor(json: JsonObject) : this(
@@ -36,10 +39,10 @@ data class Officer(val name: String,
             resignedOn = PartialDate.fromField(json.string(ChJson.RESIGNED_ON)),
 
             //Because CH sometimes returns '2538098' and sometimes '02538098' for a company
-            companyNumber = json.obj(ChJson.APPT_TO)?.string(ChJson.COMPANY_NUMBER).fixCompanyNumber()!!,
+            companyNumber = json.obj(ChJson.APPT_TO)?.string(ChJson.COMPANY_NUMBER).fixCompanyNumber(),
 
-            companyName = json.obj(ChJson.APPT_TO)?.string(ChJson.COMPANY_NAME)!!,
-            companyStatus = json.obj(ChJson.APPT_TO)?.string(ChJson.COMPANY_STATUS)!!,
+            companyName = json.obj(ChJson.APPT_TO)?.string(ChJson.COMPANY_NAME),
+            companyStatus = json.obj(ChJson.APPT_TO)?.string(ChJson.COMPANY_STATUS),
             officerCompanyNumber = json.officerRegNo()
     )
 }

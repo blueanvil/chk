@@ -10,7 +10,6 @@ import io.github.bucket4j.grid.hazelcast.Hazelcast
 import org.testng.Assert.assertEquals
 import org.testng.Assert.assertTrue
 import org.testng.annotations.Test
-import java.io.File
 import java.time.Duration
 import java.util.concurrent.atomic.AtomicLong
 
@@ -20,7 +19,7 @@ import java.util.concurrent.atomic.AtomicLong
  */
 class CompaniesHouseRestClientTest {
 
-    private val apiKey = File("./companies-house-test-api-key.txt").readText().trim()
+    private val apiKey = System.getProperty("chTestApiKey")
     private val client = CompaniesHouseRestClient(apiKey)
 
     @Test

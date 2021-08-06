@@ -9,7 +9,7 @@ import java.io.File
  */
 class CompaniesHouseClientTest {
 
-    private val apiKey = File("./companies-house-test-api-key.txt").readText().trim()
+    private val apiKey = System.getProperty("chTestApiKey")
     private val client = CompaniesHouseClient(apiKey)
 
     @Test
