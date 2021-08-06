@@ -2,12 +2,23 @@ package com.blueanvil.chk
 
 import org.testng.Assert.assertTrue
 import org.testng.annotations.Test
-import java.io.File
 
 /**
  * @author Cosmin Marginean
  */
 class CompaniesHouseClientTest {
+
+    companion object {
+        init {
+            println("SYSPROPS")
+            System.getProperties()
+                    .forEach { t, u -> println("$t -> $u") }
+
+            println("ENV")
+            System.getenv()
+                    .forEach { t, u -> println("$t -> $u") }
+        }
+    }
 
     private val apiKey = System.getProperty("chTestApiKey")
     private val client = CompaniesHouseClient(apiKey)
