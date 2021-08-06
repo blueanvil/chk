@@ -61,5 +61,5 @@ fun Response.checkStatus(vararg successCodes: Int): Response {
 }
 
 fun String?.fixCompanyNumber(): String? {
-    return this?.padStart(8, '0') ?: null
+    return this?.padStart(8, '0')
 }
