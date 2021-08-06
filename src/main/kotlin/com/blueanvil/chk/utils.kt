@@ -6,6 +6,7 @@ import okhttp3.Headers.Companion.toHeaders
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import org.slf4j.LoggerFactory
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.time.Duration
@@ -15,6 +16,7 @@ import java.time.temporal.ChronoUnit
 /**
  * @author Cosmin Marginean
  */
+private val httpLog = LoggerFactory.getLogger(OkHttpClient::class.java)
 internal val klaxonJsonParser = Parser.default()
 internal val DATE_FMT_DASH_YMD = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 internal val HTTP_OK = 200
@@ -43,6 +45,19 @@ fun Response.text(): String {
 
 fun Response.json(): JsonObject {
     return klaxonJsonParser.parse(StringBuilder(text())) as JsonObject
+}
+
+fun Response.checkOk(): Response {
+    return checkStatus(HTTP_OK)
+}
+
+fun Response.checkStatus(vararg successCodes: Int): Response {
+    if (successCodes.isNotEmpty() && !successCodes.contains(code)) {
+        val message = "Error on request ${request.url}. Status code is $code and response body is ${text()}"
+        httpLog.error(message)
+        throw RuntimeException(message)
+    }
+    return this
 }
 
 fun String?.fixCompanyNumber(): String? {

@@ -22,7 +22,8 @@ class CompaniesHouseClient(apiKey: String,
 
     fun companyProfile(companyNumber: String): JsonObject {
         return restClient.request("company/$companyNumber")
-                .get(HTTP_OK)
+                .get()
+                .checkOk()
                 .json()
     }
 

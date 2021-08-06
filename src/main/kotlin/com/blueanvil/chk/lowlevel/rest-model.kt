@@ -21,16 +21,10 @@ data class ApiRequest(val apiKey: String,
 
     private val headers = mapOf("Authorization" to "$apiKey")
 
-    fun get(vararg successCodes: Int): Response {
+    fun get(): Response {
         bucket.consume(1)
         val url = "$REST_ENDPOINT${resource.removePrefix("/")}"
-        val response = httpClient().get(url, headers)
-        if (successCodes.isNotEmpty() && !successCodes.contains(response.code)) {
-            val message = "Error on Companies House API request $url. Status code is ${response.code} and response body is ${response.text()}"
-            log.error(message)
-            throw RuntimeException(message)
-        }
-        return response
+        return httpClient().get(url, headers)
     }
 
     companion object {
