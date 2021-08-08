@@ -45,3 +45,6 @@ client.allResults("/search/companies?q=powders")
             println(json.string("company_number"))
         }
 ```
+
+# License
+The code is licensed under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
