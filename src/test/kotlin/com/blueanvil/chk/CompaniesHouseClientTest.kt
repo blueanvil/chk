@@ -31,4 +31,19 @@ class CompaniesHouseClientTest {
     fun officerAppointments() {
         assertTrue(client.appointments("tZDPlH3KiSJmoRHNwFx0OKsLF64").count() >= 90)
     }
+
+    fun usageExample() {
+        val officerId = ""
+
+        val client = CompaniesHouseClient(apiKey)
+        client.searchCompanies("banana")
+                .forEach { company ->
+                    println("${company.name}/${company.companyNumber}")
+                }
+
+        client.appointments(officerId)
+                .forEach { appointment ->
+                    println(appointment.companyName)
+                }
+    }
 }

@@ -64,4 +64,17 @@ class CompaniesHouseRestClientTest {
         }
         assertTrue(parallelCount.get() > 100)
     }
+
+    fun usageExample() {
+        val client = CompaniesHouseRestClient(apiKey)
+
+        val request = client.request("/company/02685120")
+                .get()
+        println(request.code)
+
+        client.allResults("/search/companies?q=powders")
+                .forEach { json ->
+                    println(json.string("company_number"))
+                }
+    }
 }
