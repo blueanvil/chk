@@ -15,6 +15,7 @@ class CompaniesHouseClientTest {
     fun search() {
         assertTrue(client.searchCompanies("panama").count() > 130)
         assertTrue(client.searchOfficers("marginean").count() > 70)
+        assertTrue(client.searchDisqualifiedOfficers("smith").count() > 70)
     }
 
     @Test

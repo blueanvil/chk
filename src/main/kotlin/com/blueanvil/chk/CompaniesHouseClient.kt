@@ -3,6 +3,7 @@ package com.blueanvil.chk
 import com.beust.klaxon.JsonObject
 import com.blueanvil.chk.lowlevel.CompaniesHouseRestClient
 import com.blueanvil.chk.model.CompanyInfo
+import com.blueanvil.chk.model.DisqualifiedOfficerInfo
 import com.blueanvil.chk.model.Officer
 import com.blueanvil.chk.model.OfficerInfo
 import io.github.bucket4j.BlockingBucket
@@ -30,6 +31,11 @@ class CompaniesHouseClient(apiKey: String,
     fun searchOfficers(name: String): Sequence<OfficerInfo> {
         return restClient.allResults("/search/officers?q=${name.utf8UrlEncode()}")
                 .map { OfficerInfo(it) }
+    }
+
+    fun searchDisqualifiedOfficers(name: String): Sequence<DisqualifiedOfficerInfo> {
+        return restClient.allResults("/search/disqualified-officers?q=${name.utf8UrlEncode()}")
+                .map { DisqualifiedOfficerInfo(it) }
     }
 
     fun officers(companyNumber: String): Sequence<Officer> {

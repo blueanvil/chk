@@ -22,7 +22,7 @@ data class PartialDate(val dayOfMonth: Int?,
             }
 
             return if (value is String) {
-                PartialDate(DATE_FMT_DASH_YMD.parse(value))
+                PartialDate(DATE_FMT_DASH_YMD.parse(value.replace("T.*".toRegex(), "")))
             } else {
                 val date = value as JsonObject
                 PartialDate(null, date.int(ChJson.MONTH)!!, date.int(ChJson.YEAR)!!)

@@ -2,19 +2,13 @@ package com.blueanvil.chk.lowlevel
 
 import com.beust.klaxon.JsonObject
 import com.blueanvil.chk.*
-import com.blueanvil.chk.get
-import com.blueanvil.chk.httpClient
-import com.blueanvil.chk.klaxonJsonParser
 import io.github.bucket4j.BlockingBucket
 import okhttp3.Response
-import org.slf4j.LoggerFactory
 import java.io.StringReader
 
 /**
  * @author Cosmin Marginean
  */
-internal val REGEX_OFFICER_LINK = "/officers/(.*)/appointments".toRegex()
-
 data class ApiRequest(val apiKey: String,
                       val bucket: BlockingBucket,
                       val resource: String) {
@@ -29,7 +23,6 @@ data class ApiRequest(val apiKey: String,
 
     companion object {
         private const val REST_ENDPOINT = "https://api.company-information.service.gov.uk/"
-        private val log = LoggerFactory.getLogger(ApiRequest::class.java)
     }
 }
 
