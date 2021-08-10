@@ -14,7 +14,7 @@ import io.github.bucket4j.BlockingBucket
 class CompaniesHouseClient(apiKey: String,
                            bucket: BlockingBucket = CompaniesHouseRestClient.defaultBucket()) {
 
-    private val restClient = CompaniesHouseRestClient(apiKey, bucket)
+    val restClient = CompaniesHouseRestClient(apiKey, bucket)
 
     fun searchCompanies(name: String): Sequence<CompanyInfo> {
         return restClient.allResults("/search/companies?q=${name.utf8UrlEncode()}")
