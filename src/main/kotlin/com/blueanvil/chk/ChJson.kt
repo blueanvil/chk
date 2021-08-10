@@ -16,6 +16,7 @@ object ChJson {
     const val COMPANY_NAME = "company_name"
     const val DATE_OF_CREATION = "date_of_creation"
     const val DATE_OF_CESSATION = "date_of_cessation"
+    const val CORPORATE = "corporate"
 
     val nameFields = listOf(NAME, TITLE, COMPANY_NAME)
 

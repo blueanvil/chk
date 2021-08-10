@@ -16,6 +16,7 @@ data class Officer(val name: String,
                    val nationality: String?,
                    val resignedOn: PartialDate?,
 
+                   val corporate: Boolean,
                    val companyNumber: String?,
                    val companyName: String?,
                    val companyStatus: String?,
@@ -38,9 +39,10 @@ data class Officer(val name: String,
             nationality = json.string(ChJson.NATIONALITY),
             resignedOn = PartialDate.fromField(json.string(ChJson.RESIGNED_ON)),
 
+
+            corporate = json.string(ChJson.OFFICER_ROLE)!!.contains(ChJson.CORPORATE),
             //Because CH sometimes returns '2538098' and sometimes '02538098' for a company
             companyNumber = json.obj(ChJson.APPT_TO)?.string(ChJson.COMPANY_NUMBER).fixCompanyNumber(),
-
             companyName = json.obj(ChJson.APPT_TO)?.string(ChJson.COMPANY_NAME),
             companyStatus = json.obj(ChJson.APPT_TO)?.string(ChJson.COMPANY_STATUS),
             officerCompanyNumber = json.officerRegNo()
