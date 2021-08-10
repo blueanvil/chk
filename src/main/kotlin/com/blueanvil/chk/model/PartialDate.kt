@@ -3,6 +3,7 @@ package com.blueanvil.chk.model
 import com.beust.klaxon.JsonObject
 import com.blueanvil.chk.ChJson
 import com.blueanvil.chk.DATE_FMT_DASH_YMD
+import java.time.format.DateTimeParseException
 import java.time.temporal.ChronoField
 import java.time.temporal.TemporalAccessor
 
@@ -22,7 +23,12 @@ data class PartialDate(val dayOfMonth: Int?,
             }
 
             return if (value is String) {
-                PartialDate(DATE_FMT_DASH_YMD.parse(value.replace("T.*".toRegex(), "")))
+                try {
+                    PartialDate(DATE_FMT_DASH_YMD.parse(value.replace("T.*".toRegex(), "")))
+                } catch (e: DateTimeParseException) {
+                    // Because the field value is sometimes "Unknown" or some other crap
+                    return null
+                }
             } else {
                 val date = value as JsonObject
                 PartialDate(null, date.int(ChJson.MONTH)!!, date.int(ChJson.YEAR)!!)
