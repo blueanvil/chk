@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.blueanvil:chk:1.0.6'
+    compile 'com.github.blueanvil:chk:1.0.8'
 }
 ```
 

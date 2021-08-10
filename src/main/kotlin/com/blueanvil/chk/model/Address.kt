@@ -29,7 +29,8 @@ data class Address(val premises: String? = null,
 
     companion object {
         fun fromRecord(record: JsonObject): Address? {
-            val fullAddress = record.obj(ChJson.ADDRESS)
+            val key = ChJson.addressFields.first { record.containsKey(it) }
+            val fullAddress = record.obj(key)
             if (fullAddress != null) {
                 return Address(premises = fullAddress.string("premises"),
                         addressLine1 = fullAddress.string("address_line_1"),

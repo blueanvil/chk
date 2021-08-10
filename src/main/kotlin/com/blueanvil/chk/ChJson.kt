@@ -21,6 +21,10 @@ object ChJson {
     val nameFields = listOf(NAME, TITLE, COMPANY_NAME)
 
     const val ADDRESS = "address"
+    const val REG_ADDRESS = "registered_office_address"
+
+    val addressFields = listOf(ADDRESS, REG_ADDRESS)
+
     const val ADDRESS_SNIPPET = "address_snippet"
     const val APPT_COUNT = "appointment_count"
     const val APPOINTMENTS = "appointments"
