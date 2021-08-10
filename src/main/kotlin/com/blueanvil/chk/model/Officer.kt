@@ -40,7 +40,9 @@ data class Officer(val name: String,
             resignedOn = PartialDate.fromField(json.string(ChJson.RESIGNED_ON)),
 
 
-            corporate = json.string(ChJson.OFFICER_ROLE)!!.contains(ChJson.CORPORATE),
+            corporate = json.string(ChJson.OFFICER_ROLE)!!.contains(ChJson.CORPORATE)
+                    || json.obj(ChJson.LINKS)?.string(ChJson.SELF)?.contains("/company/") ?: false,
+
             //Because CH sometimes returns '2538098' and sometimes '02538098' for a company
             companyNumber = json.obj(ChJson.APPT_TO)?.string(ChJson.COMPANY_NUMBER).fixCompanyNumber(),
             companyName = json.obj(ChJson.APPT_TO)?.string(ChJson.COMPANY_NAME),
