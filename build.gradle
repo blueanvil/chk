@@ -7,7 +7,7 @@ plugins {
 }
 
 group = 'com.blueanvil'
-version = '1.0.8'
+version = '1.0.9'
 
 repositories {
     mavenLocal()
@@ -22,6 +22,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation 'com.beust:klaxon:5.5'
     implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:6.2.0'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.2'
 
     testImplementation 'org.testng:testng:7.4.0'
     testImplementation 'com.github.vladimir-bukhtoyarov:bucket4j-hazelcast:6.2.0'
