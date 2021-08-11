@@ -35,7 +35,7 @@ class CompaniesHouseClientTest {
 
     @Test
     fun filingHistory() {
-        assertTrue(client.filingHistory("11697283").count() > 7)
+        assertTrue(client.filingHistory("03020647").count() > 7)
     }
 
     fun usageExample() {

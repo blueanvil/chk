@@ -33,3 +33,13 @@ class PagedResponse(response: Response,
 
     val items: List<JsonObject> = jsonResponse.array(ChJson.ITEMS)!!
 }
+
+private fun JsonObject.safeStartIndex(): Int {
+    // This exists because of this: https://forum.aws.chdev.org/t/start-index-field-is-sometimes-returned-as-string-instead-of-int/4259
+    val value = get(ChJson.START_INDEX)
+    return if (value is Number) {
+        value.toInt()
+    } else {
+        (value as String).toInt()
+    }
+}

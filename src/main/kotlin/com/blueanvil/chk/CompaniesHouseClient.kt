@@ -45,11 +45,6 @@ class CompaniesHouseClient(apiKey: String,
 
     fun filingHistory(companyNumber: String): List<JsonObject> {
         return restClient.allResults("/company/$companyNumber/filing-history").toList()
-//                .get()
-//                .checkOk()
-//                .json()
-//                .array<JsonObject>(ChJson.ITEMS)!!
-//                .toList()
     }
 
     fun appointments(officerId: String): Sequence<Officer> {
