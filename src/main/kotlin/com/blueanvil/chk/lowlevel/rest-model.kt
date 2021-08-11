@@ -29,7 +29,7 @@ data class ApiRequest(val apiKey: String,
 class PagedResponse(response: Response,
                     val jsonResponse: JsonObject = klaxonJsonParser.parse(StringReader(response.text())) as JsonObject,
                     val totalResults: Int = jsonResponse.totalRecords(),
-                    val startIndex: Int = jsonResponse.int(ChJson.START_INDEX)!!) {
+                    val startIndex: Int = jsonResponse.safeStartIndex()) {
 
     val items: List<JsonObject> = jsonResponse.array(ChJson.ITEMS)!!
 }
