@@ -6,6 +6,7 @@ package com.blueanvil.chk
 object ChJson {
 
     const val TOTAL_RESULTS = "total_results"
+    const val TOTAL_COUNT = "total_count"
     const val START_INDEX = "start_index"
     const val ITEMS = "items"
     const val COMPANY = "company"
@@ -18,12 +19,8 @@ object ChJson {
     const val DATE_OF_CESSATION = "date_of_cessation"
     const val CORPORATE = "corporate"
 
-    val nameFields = listOf(NAME, TITLE, COMPANY_NAME)
-
     const val ADDRESS = "address"
     const val REG_ADDRESS = "registered_office_address"
-
-    val addressFields = listOf(ADDRESS, REG_ADDRESS)
 
     const val ADDRESS_SNIPPET = "address_snippet"
     const val APPT_COUNT = "appointment_count"
@@ -46,4 +43,9 @@ object ChJson {
     const val OFFICER = "officer"
     const val IDENTIFICATION = "identification"
     const val REG_NO = "registration_number"
+
+    val nameFields = listOf(NAME, TITLE, COMPANY_NAME)
+    val addressFields = listOf(ADDRESS, REG_ADDRESS)
+    val totalFields = listOf(TOTAL_RESULTS, TOTAL_COUNT)
+
 }
