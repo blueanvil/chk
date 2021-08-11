@@ -33,6 +33,11 @@ class CompaniesHouseClientTest {
         assertTrue(client.appointments("tZDPlH3KiSJmoRHNwFx0OKsLF64").count() >= 90)
     }
 
+    @Test
+    fun filingHistory() {
+        assertTrue(client.filingHistory("11697283").count() > 7)
+    }
+
     fun usageExample() {
         val officerId = ""
 

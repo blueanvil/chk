@@ -43,6 +43,10 @@ class CompaniesHouseClient(apiKey: String,
                 .map { Officer(it) }
     }
 
+    fun filingHistory(companyNumber: String): Sequence<JsonObject> {
+        return restClient.allResults("/company/$companyNumber/filing-history")
+    }
+
     fun appointments(officerId: String): Sequence<Officer> {
         return restClient.allResults("/officers/$officerId/appointments")
                 .map { Officer(it) }
