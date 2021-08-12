@@ -30,6 +30,7 @@ object ChJson {
     const val APPT_BEFORE = "appointed_before"
     const val OCCUPATION = "occupation"
     const val NATIONALITY = "nationality"
+    const val COUNTRY_OF_RESIDENCE = "country_of_residence"
     const val RESIGNED_ON = "resigned_on"
 
     const val DOB = "date_of_birth"

@@ -14,6 +14,7 @@ data class Officer(val name: String,
                    val appointed: PartialDate?,
                    val occupation: String?,
                    val nationality: String?,
+                   val countryOfResidence: String?,
                    val resignedOn: PartialDate?,
 
                    val corporate: Boolean,
@@ -37,6 +38,7 @@ data class Officer(val name: String,
 
             occupation = json.string(ChJson.OCCUPATION),
             nationality = json.string(ChJson.NATIONALITY),
+            countryOfResidence = json.string(ChJson.COUNTRY_OF_RESIDENCE),
             resignedOn = PartialDate.fromField(json.string(ChJson.RESIGNED_ON)),
 
 
