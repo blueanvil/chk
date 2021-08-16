@@ -23,9 +23,9 @@ data class Officer(val name: String,
                    val companyStatus: String?,
                    val officerCompanyNumber: String?) {
 
-    constructor(json: JsonObject) : this(
+    constructor(json: JsonObject, officerId: String? = null) : this(
             name = json.string(ChJson.NAME)!!,
-            officerId = json.officerId(),
+            officerId = json.officerId() ?: officerId,
             role = json.string(ChJson.OFFICER_ROLE)!!,
             dateOfBirth = PartialDate.fromField(json[ChJson.DOB]),
             address = Address.fromRecord(json)!!,

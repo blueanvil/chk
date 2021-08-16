@@ -49,6 +49,6 @@ class CompaniesHouseClient(apiKey: String,
 
     fun appointments(officerId: String): Sequence<Officer> {
         return restClient.allResults("/officers/$officerId/appointments")
-                .map { Officer(it) }
+                .map { Officer(it, officerId) }
     }
 }
