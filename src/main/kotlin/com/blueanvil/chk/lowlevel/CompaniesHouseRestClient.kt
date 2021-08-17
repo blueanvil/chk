@@ -21,7 +21,7 @@ class CompaniesHouseRestClient(private val apiKey: String,
         return ApiRequest(apiKey, bucket, resource)
     }
 
-    fun allResults(pagedResource: String): Sequence<JsonObject> {
+    fun allResults(pagedResource: String): SequenceResult {
         return allResults { startIndex ->
             pagedGet(pagedResource, startIndex)
         }
@@ -53,16 +53,16 @@ class CompaniesHouseRestClient(private val apiKey: String,
         return PagedResponse(response)
     }
 
-    private fun allResults(fetchPage: (Int) -> PagedResponse): Sequence<JsonObject> {
+    private fun allResults(fetchPage: (Int) -> PagedResponse): SequenceResult {
         val firstResponse = fetchPage(0)
         val totalResults = firstResponse.totalResults.coerceAtMost(MAX_RESULTS)
         if (totalResults == 0) {
-            return emptySequence()
+            return SequenceResult(firstResponse.jsonResponse, emptySequence())
         }
 
         var page = firstResponse.items
         var currentIndex = 0
-        return generateSequence {
+        val sequence = generateSequence {
             if (currentIndex == totalResults) {
                 null
             } else {
@@ -75,6 +75,7 @@ class CompaniesHouseRestClient(private val apiKey: String,
                 currentElement
             }
         }
+        return SequenceResult(firstResponse.jsonResponse, sequence)
     }
 
     private fun allResultsParallel(threadPool: ExecutorService,

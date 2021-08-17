@@ -15,7 +15,7 @@ data class OfficerInfo(val name: String,
             name = record.name(),
             officerId = record.officerId()!!,
             numberOfAppointments = record.int(ChJson.APPT_COUNT) ?: 0,
-            dateOfBirth = PartialDate.fromField(record[ChJson.DOB]))
+            dateOfBirth = PartialDate.fromField(record[ChJson.DATE_OF_BIRTH]))
 
 }
 
@@ -26,6 +26,6 @@ data class DisqualifiedOfficerInfo(val name: String,
     constructor(record: JsonObject) : this(
             name = record.name(),
             officerId = record.disqualifiedOfficerId()!!,
-            dateOfBirth = PartialDate.fromField(record[ChJson.DOB]))
+            dateOfBirth = PartialDate.fromField(record[ChJson.DATE_OF_BIRTH]))
 
 }

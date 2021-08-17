@@ -25,8 +25,8 @@ class CompaniesHouseRestClientTest {
     @Test
     fun basicRestFunctions() {
         assertTrue(client.request("/company/02685120").get().text().contains("""persons_with_significant_control_statements":"/company/02685120/persons-with-significant-control-statements""""))
-        assertTrue(client.allResults("/search/companies?q=powders").count() > 60)
-        assertTrue(client.allResults("/officers/tZDPlH3KiSJmoRHNwFx0OKsLF64/appointments").count() >= 90)
+        assertTrue(client.allResults("/search/companies?q=powders").sequence.count() > 60)
+        assertTrue(client.allResults("/officers/tZDPlH3KiSJmoRHNwFx0OKsLF64/appointments").sequence.count() >= 90)
         assertEquals(client.request("/company/1234").get().code, 404)
     }
 
@@ -34,7 +34,7 @@ class CompaniesHouseRestClientTest {
     fun parallelism() {
         val pagedResource = "/company/02685120/officers"
 
-        val count = client.allResults(pagedResource).count()
+        val count = client.allResults(pagedResource).sequence.count()
         println("Found $count officers with regular fetch")
 
         val parallelCount = AtomicLong(0)
@@ -73,6 +73,7 @@ class CompaniesHouseRestClientTest {
         println(request.code)
 
         client.allResults("/search/companies?q=powders")
+                .sequence
                 .forEach { json ->
                     println(json.string("company_number"))
                 }

@@ -60,6 +60,7 @@ fun Response.checkStatus(vararg successCodes: Int): Response {
     return this
 }
 
+//Because CH sometimes returns '2538098' and sometimes '02538098' for a company
 fun String?.fixCompanyNumber(): String? {
     return this?.padStart(8, '0')
 }

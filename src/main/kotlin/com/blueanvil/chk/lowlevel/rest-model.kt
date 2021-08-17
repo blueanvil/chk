@@ -26,10 +26,10 @@ data class ApiRequest(val apiKey: String,
     }
 }
 
-class PagedResponse(response: Response,
-                    val jsonResponse: JsonObject = klaxonJsonParser.parse(StringReader(response.text())) as JsonObject,
-                    val totalResults: Int = jsonResponse.totalRecords(),
-                    val startIndex: Int = jsonResponse.safeStartIndex()) {
+data class PagedResponse(val response: Response,
+                         val jsonResponse: JsonObject = klaxonJsonParser.parse(StringReader(response.text())) as JsonObject,
+                         val totalResults: Int = jsonResponse.totalRecords(),
+                         val startIndex: Int = jsonResponse.safeStartIndex()) {
 
     val items: List<JsonObject> = jsonResponse.array(ChJson.ITEMS)!!
 }
@@ -43,3 +43,6 @@ private fun JsonObject.safeStartIndex(): Int {
         (value as String).toInt()
     }
 }
+
+data class SequenceResult(val firstResponse: JsonObject,
+                          val sequence: Sequence<JsonObject>)

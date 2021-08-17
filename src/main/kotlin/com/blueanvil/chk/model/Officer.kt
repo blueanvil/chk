@@ -27,7 +27,7 @@ data class Officer(val name: String,
             name = json.string(ChJson.NAME)!!,
             officerId = json.officerId() ?: officerId,
             role = json.string(ChJson.OFFICER_ROLE)!!,
-            dateOfBirth = PartialDate.fromField(json[ChJson.DOB]),
+            dateOfBirth = PartialDate.fromField(json[ChJson.DATE_OF_BIRTH]),
             address = Address.fromRecord(json)!!,
 
             appointed = if (json.string(ChJson.APPT_ON) != null) {
@@ -45,10 +45,13 @@ data class Officer(val name: String,
             corporate = json.string(ChJson.OFFICER_ROLE)!!.contains(ChJson.CORPORATE)
                     || json.obj(ChJson.LINKS)?.string(ChJson.SELF)?.contains("/company/") ?: false,
 
-            //Because CH sometimes returns '2538098' and sometimes '02538098' for a company
             companyNumber = json.obj(ChJson.APPT_TO)?.string(ChJson.COMPANY_NUMBER).fixCompanyNumber(),
             companyName = json.obj(ChJson.APPT_TO)?.string(ChJson.COMPANY_NAME),
             companyStatus = json.obj(ChJson.APPT_TO)?.string(ChJson.COMPANY_STATUS),
             officerCompanyNumber = json.officerRegNo()
     )
 }
+
+data class Appointments(val name: String,
+                        val dateOfBirth: PartialDate?,
+                        val appointments: Sequence<Officer>)

@@ -30,7 +30,7 @@ class CompaniesHouseClientTest {
 
     @Test
     fun officerAppointments() {
-        assertTrue(client.appointments("tZDPlH3KiSJmoRHNwFx0OKsLF64").count() >= 90)
+        assertTrue(client.appointments("tZDPlH3KiSJmoRHNwFx0OKsLF64").appointments.count() >= 90)
     }
 
     @Test
@@ -48,6 +48,7 @@ class CompaniesHouseClientTest {
                 }
 
         client.appointments(officerId)
+                .appointments
                 .forEach { appointment ->
                     println(appointment.companyName)
                 }

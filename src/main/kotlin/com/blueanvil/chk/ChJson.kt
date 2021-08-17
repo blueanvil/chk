@@ -33,7 +33,7 @@ object ChJson {
     const val COUNTRY_OF_RESIDENCE = "country_of_residence"
     const val RESIGNED_ON = "resigned_on"
 
-    const val DOB = "date_of_birth"
+    const val DATE_OF_BIRTH = "date_of_birth"
     const val MONTH = "month"
     const val YEAR = "year"
 
