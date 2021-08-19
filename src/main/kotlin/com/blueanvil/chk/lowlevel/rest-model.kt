@@ -40,7 +40,7 @@ private fun JsonObject.safeStartIndex(): Int {
     return if (value is Number) {
         value.toInt()
     } else {
-        (value as String).toInt()
+        (value as String?)?.toInt() ?: 0
     }
 }
 

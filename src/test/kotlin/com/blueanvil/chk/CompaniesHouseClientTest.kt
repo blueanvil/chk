@@ -30,7 +30,7 @@ class CompaniesHouseClientTest {
 
     @Test
     fun companyOfficersNotPresent() {
-        assertTrue(client.officers("BR022833").count() == 0)
+        assertTrue(client.officers("BR022833").none())
     }
 
     @Test

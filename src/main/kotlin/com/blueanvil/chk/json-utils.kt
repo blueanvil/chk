@@ -32,8 +32,8 @@ fun JsonObject.disqualifiedOfficerId(): String? {
 }
 
 fun JsonObject.totalRecords(): Int {
-    val key = ChJson.totalFields.first { containsKey(it) }
-    return int(key)!!
+    val key = ChJson.totalFields.firstOrNull() { containsKey(it) }
+    return if (key != null) int(key)!! else 0
 }
 
 fun JsonObject.name() = ChJson.nameFields.map { string(it) }.first { it != null }!!
