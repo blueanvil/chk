@@ -29,6 +29,11 @@ class CompaniesHouseClientTest {
     }
 
     @Test
+    fun companyOfficersNotPresent() {
+        assertTrue(client.officers("BR022833").count() == 0)
+    }
+
+    @Test
     fun officerAppointments() {
         assertTrue(client.appointments("tZDPlH3KiSJmoRHNwFx0OKsLF64").appointments.count() >= 90)
     }

@@ -19,7 +19,10 @@ import java.time.temporal.ChronoUnit
 private val httpLog = LoggerFactory.getLogger(OkHttpClient::class.java)
 internal val klaxonJsonParser = Parser.default()
 internal val DATE_FMT_DASH_YMD = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+
 internal val HTTP_OK = 200
+internal val HTTP_NOT_FOUND = 404
+
 internal fun String.tidySpaces() = replace("\\s+".toRegex(), " ").trim()
 internal fun String.utf8UrlEncode() = URLEncoder.encode(this, StandardCharsets.UTF_8.name())
 

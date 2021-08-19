@@ -1,7 +1,6 @@
 package com.blueanvil.chk.lowlevel
 
 import com.beust.klaxon.JsonObject
-import com.blueanvil.chk.checkOk
 import io.github.bucket4j.Bandwidth
 import io.github.bucket4j.BlockingBucket
 import io.github.bucket4j.Bucket4j
@@ -49,7 +48,6 @@ class CompaniesHouseRestClient(private val apiKey: String,
         val resource = pagedResource + "${appendChar}items_per_page=${RESULTS_PER_PAGE}&start_index=${startIndex}"
         val response = request(resource)
                 .get()
-                .checkOk()
         return PagedResponse(response)
     }
 
@@ -57,7 +55,7 @@ class CompaniesHouseRestClient(private val apiKey: String,
         val firstResponse = fetchPage(0)
         val totalResults = firstResponse.totalResults.coerceAtMost(MAX_RESULTS)
         if (totalResults == 0) {
-            return SequenceResult(firstResponse.jsonResponse, emptySequence())
+            return SequenceResult(firstResponse.response.code, firstResponse.jsonResponse, emptySequence())
         }
 
         var page = firstResponse.items
@@ -75,7 +73,7 @@ class CompaniesHouseRestClient(private val apiKey: String,
                 currentElement
             }
         }
-        return SequenceResult(firstResponse.jsonResponse, sequence)
+        return SequenceResult(firstResponse.response.code, firstResponse.jsonResponse, sequence)
     }
 
     private fun allResultsParallel(threadPool: ExecutorService,
