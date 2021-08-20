@@ -31,7 +31,13 @@ data class PagedResponse(val response: Response,
                          val totalResults: Int = jsonResponse.totalRecords(),
                          val startIndex: Int = jsonResponse.safeStartIndex()) {
 
-    val items: List<JsonObject> = if (response.code == HTTP_OK) jsonResponse.array(ChJson.ITEMS)!! else emptyList()
+    val items: List<JsonObject>
+        get() {
+            return if (response.code != HTTP_OK || !jsonResponse.containsKey(ChJson.ITEMS))
+                emptyList()
+            else
+                jsonResponse.array(ChJson.ITEMS)!!
+        }
 }
 
 private fun JsonObject.safeStartIndex(): Int {
