@@ -1,10 +1,12 @@
 package com.blueanvil.chk.lowlevel
 
 import com.beust.klaxon.JsonObject
-import com.blueanvil.chk.checkOk
+import com.blueanvil.chk.HTTP_OK
+import com.blueanvil.chk.json
 import io.github.bucket4j.Bandwidth
 import io.github.bucket4j.BlockingBucket
 import io.github.bucket4j.Bucket4j
+import org.slf4j.LoggerFactory
 import java.time.Duration
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -49,7 +51,6 @@ class CompaniesHouseRestClient(private val apiKey: String,
         val resource = pagedResource + "${appendChar}items_per_page=${RESULTS_PER_PAGE}&start_index=${startIndex}"
         val response = request(resource)
                 .get()
-                .checkOk()
         return PagedResponse(response)
     }
 
@@ -101,6 +102,7 @@ class CompaniesHouseRestClient(private val apiKey: String,
     companion object {
         const val RESULTS_PER_PAGE = 50
         const val MAX_RESULTS = 1000
+        private val log = LoggerFactory.getLogger(CompaniesHouseRestClient::class.java)
 
         internal fun defaultBucket(): BlockingBucket {
             // See https://developer.company-information.service.gov.uk/developer-guidelines

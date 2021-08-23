@@ -4,6 +4,7 @@ import com.beust.klaxon.JsonObject
 import com.blueanvil.chk.*
 import io.github.bucket4j.BlockingBucket
 import okhttp3.Response
+import org.slf4j.LoggerFactory
 import java.io.StringReader
 
 /**
@@ -26,18 +27,33 @@ data class ApiRequest(val apiKey: String,
     }
 }
 
-data class PagedResponse(val response: Response,
-                         val jsonResponse: JsonObject = klaxonJsonParser.parse(StringReader(response.text())) as JsonObject,
-                         val totalResults: Int = jsonResponse.totalRecords(),
-                         val startIndex: Int = jsonResponse.safeStartIndex()) {
+data class PagedResponse(val response: Response) {
+
+    val jsonResponse = jsonResponse()
+    val totalResults: Int = jsonResponse?.totalRecords() ?: 0
+    val startIndex: Int = jsonResponse?.safeStartIndex() ?: 0
 
     val items: List<JsonObject>
         get() {
-            return if (response.code != HTTP_OK || !jsonResponse.containsKey(ChJson.ITEMS))
+            return if (response.code != HTTP_OK || jsonResponse == null || !jsonResponse.containsKey(ChJson.ITEMS))
                 emptyList()
             else
-                jsonResponse.array(ChJson.ITEMS)!!
+                jsonResponse?.array(ChJson.ITEMS) ?: emptyList()
         }
+
+    private fun jsonResponse(): JsonObject? {
+        if (response.code != HTTP_OK) {
+            val text = response.text()
+            log.error("Error on request ${response.request.url}. Status code is $response.code and response body is $text")
+            return null
+        }
+
+        return klaxonJsonParser.parse(StringReader(response.text())) as JsonObject
+    }
+
+    companion object {
+        private val log = LoggerFactory.getLogger(PagedResponse::class.java)
+    }
 }
 
 private fun JsonObject.safeStartIndex(): Int {

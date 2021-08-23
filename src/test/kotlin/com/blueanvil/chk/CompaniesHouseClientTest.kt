@@ -28,7 +28,7 @@ class CompaniesHouseClientTest {
         assertTrue(client.officers("02391726").count() >= 3)
     }
 
-    @Test(expectedExceptions = [RuntimeException::class])
+    @Test
     fun companyOfficersNotPresent() {
         assertTrue(client.officers("BR022833").none())
     }
