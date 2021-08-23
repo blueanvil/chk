@@ -40,7 +40,7 @@ jacocoTestReport {
 test {
     useTestNG()
     systemProperty "chTestApiKey", System.getProperty("chTestApiKey")
-//    testLogging.showStandardStreams = true
+    testLogging.showStandardStreams = true
     finalizedBy jacocoTestReport
 }
 

@@ -1,6 +1,7 @@
 package com.blueanvil.chk.lowlevel
 
 import com.beust.klaxon.JsonObject
+import com.blueanvil.chk.checkOk
 import io.github.bucket4j.Bandwidth
 import io.github.bucket4j.BlockingBucket
 import io.github.bucket4j.Bucket4j
@@ -48,6 +49,7 @@ class CompaniesHouseRestClient(private val apiKey: String,
         val resource = pagedResource + "${appendChar}items_per_page=${RESULTS_PER_PAGE}&start_index=${startIndex}"
         val response = request(resource)
                 .get()
+                .checkOk()
         return PagedResponse(response)
     }
 
