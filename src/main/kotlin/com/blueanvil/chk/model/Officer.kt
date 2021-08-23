@@ -52,6 +52,6 @@ data class Officer(val name: String,
     )
 }
 
-data class Appointments(val name: String,
+data class Appointments(val name: String?,
                         val dateOfBirth: PartialDate?,
                         val appointments: Sequence<Officer>)

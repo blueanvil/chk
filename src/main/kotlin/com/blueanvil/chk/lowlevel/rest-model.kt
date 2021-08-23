@@ -67,5 +67,5 @@ private fun JsonObject.safeStartIndex(): Int {
 }
 
 data class SequenceResult(val statusCode: Int,
-                          val firstResponse: JsonObject,
+                          val firstResponse: JsonObject?,
                           val sequence: Sequence<JsonObject>)
