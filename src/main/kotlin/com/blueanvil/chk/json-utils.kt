@@ -7,6 +7,7 @@ import com.beust.klaxon.JsonObject
  */
 internal val REGEX_OFFICER_LINK = "/officers/(.*)/appointments".toRegex()
 internal val REGEX_DISQUALIFIED_OFFICER_LINK = "/disqualified-officers/natural/(.*)".toRegex()
+internal const val FILING_FILE_URL_BASE = "https://find-and-update.company-information.service.gov.uk"
 private val filingDescEnum =
         CompaniesHouseEnums.getEnumeration("filing_history_descriptions.yml").sections["description"]!!
 
@@ -52,6 +53,11 @@ fun JsonObject.filingHistoryDescription(): String {
                 .forEach { description = description.replace("{${it}}", descValues.string(it)!!) }
     }
     return description
+}
+
+fun JsonObject.filingHistoryUrl():String{
+    val relativeUrl =  obj("links")!!.string("self")!!
+    return "$FILING_FILE_URL_BASE$relativeUrl/document?format=pdf&download=0"
 }
 
 fun JsonObject.name() = ChJson.nameFields.map { string(it) }.first { it != null }!!
