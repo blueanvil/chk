@@ -7,6 +7,8 @@ import com.beust.klaxon.JsonObject
  */
 internal val REGEX_OFFICER_LINK = "/officers/(.*)/appointments".toRegex()
 internal val REGEX_DISQUALIFIED_OFFICER_LINK = "/disqualified-officers/natural/(.*)".toRegex()
+private val filingDescEnum =
+        CompaniesHouseEnums.getEnumeration("filing_history_descriptions.yml").sections["description"]!!
 
 fun JsonObject.officerId(): String? {
     val selfLink = obj(ChJson.LINKS)?.string(ChJson.SELF)
@@ -34,6 +36,22 @@ fun JsonObject.disqualifiedOfficerId(): String? {
 fun JsonObject.totalRecords(): Int {
     val key = ChJson.totalFields.firstOrNull() { containsKey(it) }
     return if (key != null) int(key)!! else 0
+}
+
+fun JsonObject.filingHistoryDescription(): String {
+    val descriptionKey = string("description")!!
+    if (!filingDescEnum.mappings.containsKey(descriptionKey)) {
+        return descriptionKey
+    }
+    val descriptionFmt = filingDescEnum.mappings[descriptionKey]!!
+    var description = descriptionFmt.replace("*", "")
+    if (containsKey("description_values")) {
+        val descValues = obj("description_values")!!
+        descValues.keys
+                .filter { descValues[it] is String }
+                .forEach { description = description.replace("{${it}}", descValues.string(it)!!) }
+    }
+    return description
 }
 
 fun JsonObject.name() = ChJson.nameFields.map { string(it) }.first { it != null }!!
