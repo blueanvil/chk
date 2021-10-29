@@ -55,8 +55,8 @@ fun JsonObject.filingHistoryDescription(): String {
     return description
 }
 
-fun JsonObject.filingHistoryUrl():String{
-    val relativeUrl =  obj("links")!!.string("self")!!
+fun JsonObject.filingHistoryUrl(): String? {
+    val relativeUrl = obj("links")?.string("self") ?: return null
     return "$FILING_FILE_URL_BASE$relativeUrl/document?format=pdf&download=0"
 }
 

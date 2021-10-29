@@ -1,8 +1,6 @@
 package com.blueanvil.chk.lowlevel
 
 import com.beust.klaxon.JsonObject
-import com.blueanvil.chk.HTTP_OK
-import com.blueanvil.chk.json
 import io.github.bucket4j.Bandwidth
 import io.github.bucket4j.BlockingBucket
 import io.github.bucket4j.Bucket4j

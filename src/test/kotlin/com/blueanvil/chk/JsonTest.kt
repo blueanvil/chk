@@ -3,7 +3,6 @@ package com.blueanvil.chk
 import com.beust.klaxon.JsonObject
 import org.testng.Assert.assertEquals
 import org.testng.annotations.Test
-import java.lang.StringBuilder
 
 /**
  * @author Cosmin Marginean
