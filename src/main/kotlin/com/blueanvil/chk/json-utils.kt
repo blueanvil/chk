@@ -42,7 +42,7 @@ fun JsonObject.totalRecords(): Int {
 fun JsonObject.filingHistoryDescription(): String {
     val descriptionKey = string("description")!!
     if (!filingDescEnum.mappings.containsKey(descriptionKey)) {
-        return descriptionKey
+        return obj("description_values")?.string("description") ?: descriptionKey
     }
     val descriptionFmt = filingDescEnum.mappings[descriptionKey]!!
     var description = descriptionFmt.replace("*", "")
