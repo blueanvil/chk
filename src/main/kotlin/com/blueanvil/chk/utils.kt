@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.time.Duration
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
@@ -25,6 +26,10 @@ internal val HTTP_NOT_FOUND = 404
 
 internal fun String.tidySpaces() = replace("\\s+".toRegex(), " ").trim()
 internal fun String.utf8UrlEncode() = URLEncoder.encode(this, StandardCharsets.UTF_8.name())
+
+internal fun String?.toLocalDate():LocalDate? {
+    return LocalDate.from(DATE_FMT_DASH_YMD.parse(this))
+}
 
 internal fun httpClient() = OkHttpClient().newBuilder()
         .connectTimeout(Duration.of(120, ChronoUnit.SECONDS))

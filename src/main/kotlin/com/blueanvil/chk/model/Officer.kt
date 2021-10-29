@@ -1,17 +1,15 @@
 package com.blueanvil.chk.model
 
 import com.beust.klaxon.JsonObject
-import com.blueanvil.chk.ChJson
-import com.blueanvil.chk.fixCompanyNumber
-import com.blueanvil.chk.officerId
-import com.blueanvil.chk.officerRegNo
+import com.blueanvil.chk.*
+import java.time.LocalDate
 
 data class Officer(val name: String,
                    val officerId: String?,
                    val role: String,
                    val dateOfBirth: PartialDate?,
                    val address: Address = Address(),
-                   val appointed: PartialDate?,
+                   val appointedOn: LocalDate?,
                    val occupation: String?,
                    val nationality: String?,
                    val countryOfResidence: String?,
@@ -30,10 +28,10 @@ data class Officer(val name: String,
             dateOfBirth = PartialDate.fromField(json[ChJson.DATE_OF_BIRTH]),
             address = Address.fromRecord(json)!!,
 
-            appointed = if (json.string(ChJson.APPT_ON) != null) {
-                PartialDate.fromField(json.string(ChJson.APPT_ON))
+            appointedOn = if (json.string(ChJson.APPT_ON) != null) {
+                json.string(ChJson.APPT_ON)!!.toLocalDate()
             } else {
-                PartialDate.fromField(json.string(ChJson.APPT_BEFORE))
+                json.string(ChJson.APPT_BEFORE).toLocalDate()
             },
 
             occupation = json.string(ChJson.OCCUPATION),
