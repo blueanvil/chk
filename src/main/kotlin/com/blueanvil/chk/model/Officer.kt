@@ -42,8 +42,7 @@ data class Officer(val name: String,
             resignedOn = PartialDate.fromField(json.string(ChJson.RESIGNED_ON)),
 
 
-            corporate = json.string(ChJson.OFFICER_ROLE)!!.contains(ChJson.CORPORATE)
-                    || json.obj(ChJson.LINKS)?.string(ChJson.SELF)?.contains("/company/") ?: false,
+            corporate = json.string(ChJson.OFFICER_ROLE)!!.contains(ChJson.CORPORATE),
 
             companyNumber = json.obj(ChJson.APPT_TO)?.string(ChJson.COMPANY_NUMBER).fixCompanyNumber(),
             companyName = json.obj(ChJson.APPT_TO)?.string(ChJson.COMPANY_NAME),
