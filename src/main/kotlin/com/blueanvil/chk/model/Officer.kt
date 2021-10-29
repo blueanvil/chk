@@ -10,10 +10,10 @@ data class Officer(val name: String,
                    val dateOfBirth: PartialDate?,
                    val address: Address = Address(),
                    val appointedOn: LocalDate?,
+                   val resignedOn: LocalDate?,
                    val occupation: String?,
                    val nationality: String?,
                    val countryOfResidence: String?,
-                   val resignedOn: PartialDate?,
 
                    val corporate: Boolean,
                    val companyNumber: String?,
@@ -37,7 +37,7 @@ data class Officer(val name: String,
             occupation = json.string(ChJson.OCCUPATION),
             nationality = json.string(ChJson.NATIONALITY),
             countryOfResidence = json.string(ChJson.COUNTRY_OF_RESIDENCE),
-            resignedOn = PartialDate.fromField(json.string(ChJson.RESIGNED_ON)),
+            resignedOn = json.string(ChJson.RESIGNED_ON).toLocalDate(),
 
 
             corporate = json.string(ChJson.OFFICER_ROLE)!!.contains(ChJson.CORPORATE),
@@ -47,6 +47,8 @@ data class Officer(val name: String,
             companyStatus = json.obj(ChJson.APPT_TO)?.string(ChJson.COMPANY_STATUS),
             officerCompanyNumber = json.officerRegNo()
     )
+
+    val resigned = resignedOn != null
 }
 
 data class Appointments(val name: String?,

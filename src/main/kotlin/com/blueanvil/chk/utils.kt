@@ -27,7 +27,10 @@ internal val HTTP_NOT_FOUND = 404
 internal fun String.tidySpaces() = replace("\\s+".toRegex(), " ").trim()
 internal fun String.utf8UrlEncode() = URLEncoder.encode(this, StandardCharsets.UTF_8.name())
 
-internal fun String?.toLocalDate():LocalDate? {
+internal fun String?.toLocalDate(): LocalDate? {
+    if (this == null) {
+        return null
+    }
     return LocalDate.from(DATE_FMT_DASH_YMD.parse(this))
 }
 

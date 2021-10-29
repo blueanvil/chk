@@ -7,7 +7,7 @@ plugins {
 }
 
 group = 'com.blueanvil'
-version = '1.0.25'
+version = '1.0.27'
 
 repositories {
     mavenLocal()
