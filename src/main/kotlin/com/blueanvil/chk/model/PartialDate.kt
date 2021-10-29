@@ -39,7 +39,7 @@ data class PartialDate(val dayOfMonth: Int?,
         if (field == ChronoField.MONTH_OF_YEAR) {
             return month != null
         }
-        return field == ChronoField.YEAR_OF_ERA
+        return field == ChronoField.YEAR_OF_ERA || field == ChronoField.YEAR
     }
 
     override fun getLong(field: TemporalField): Long {
@@ -52,7 +52,7 @@ data class PartialDate(val dayOfMonth: Int?,
         if (field == ChronoField.MONTH_OF_YEAR) {
             return month!!.toLong()
         }
-        return if (field == ChronoField.YEAR_OF_ERA) {
+        return if (field == ChronoField.YEAR_OF_ERA || field == ChronoField.YEAR) {
             year.toLong()
         } else 0
     }
