@@ -50,6 +50,16 @@ data class Officer(val name: String,
 
     val resigned = resignedOn != null
     val roleLabel = officerRoles.mappings[role]
+    val cleanName = if (corporate) {
+        name
+    } else {
+        val comma = name.indexOf(",")
+        if (comma > 0) {
+            name.substring(comma + 1).trim() + " " + name.substring(0, comma).trim().lowercase().capitalize()
+        } else {
+            name
+        }
+    }
 
     companion object {
         private val officerRoles = CompaniesHouseEnums.getEnumeration("constants.yml").sections["officer_role"]!!
