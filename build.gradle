@@ -7,7 +7,7 @@ plugins {
 }
 
 group = 'com.blueanvil'
-version = '1.0.27'
+version = '1.0.29'
 
 repositories {
     mavenLocal()
@@ -58,5 +58,13 @@ publishing {
 
     repositories {
         mavenLocal()
+        maven {
+            name 'blueanvil-public'
+            url 'https://blueanvil.mycloudrepo.io/repositories/public'
+            credentials {
+                username blueanvilPrivateRepoUser
+                password blueanvilPrivateRepoPass
+            }
+        }
     }
 }

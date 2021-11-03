@@ -49,6 +49,11 @@ data class Officer(val name: String,
     )
 
     val resigned = resignedOn != null
+    val roleLabel = officerRoles.mappings[role]
+
+    companion object {
+        private val officerRoles = CompaniesHouseEnums.getEnumeration("constants.yml").sections["officer_role"]!!
+    }
 }
 
 data class Appointments(val name: String?,
