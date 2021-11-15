@@ -53,7 +53,7 @@ class CompaniesHouseClient(apiKey: String,
     fun appointments(officerId: String): Appointments {
         val response = restClient.allResults("/officers/$officerId/appointments")
         return Appointments(name = response.firstResponse?.string(ChJson.NAME),
-                dateOfBirth = PartialDate.fromField(response.firstResponse?.get(ChJson.DATE_OF_BIRTH)),
+                dateOfBirth = ChkPartialDate.fromField(response.firstResponse?.get(ChJson.DATE_OF_BIRTH)),
                 appointments = response.sequence.map { Officer(it, officerId) })
     }
 }

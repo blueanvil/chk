@@ -12,8 +12,8 @@ data class CompanyInfo(val name: String,
                        val officerId: String?,
                        val numberOfAppointments: Int,
                        val address: Address?,
-                       val dateOfCreation: PartialDate?,
-                       val dateOfCessation: PartialDate?) {
+                       val dateOfCreation: ChkPartialDate?,
+                       val dateOfCessation: ChkPartialDate?) {
 
     constructor(record: JsonObject) : this(
             name = record.name(),
@@ -22,8 +22,8 @@ data class CompanyInfo(val name: String,
             officerId = record.officerId(),
             numberOfAppointments = record.int(ChJson.APPT_COUNT) ?: 0,
             address = Address.fromRecord(record),
-            dateOfCreation = PartialDate.fromField(record[ChJson.DATE_OF_CREATION]),
-            dateOfCessation = PartialDate.fromField(record[ChJson.DATE_OF_CESSATION])
+            dateOfCreation = ChkPartialDate.fromField(record[ChJson.DATE_OF_CREATION]),
+            dateOfCessation = ChkPartialDate.fromField(record[ChJson.DATE_OF_CESSATION])
     )
 }
 

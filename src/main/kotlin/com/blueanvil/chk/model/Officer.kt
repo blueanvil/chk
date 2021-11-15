@@ -7,7 +7,7 @@ import java.time.LocalDate
 data class Officer(val name: String,
                    val officerId: String?,
                    val role: String,
-                   val dateOfBirth: PartialDate?,
+                   val dateOfBirth: ChkPartialDate?,
                    val address: Address = Address(),
                    val appointedOn: LocalDate?,
                    val resignedOn: LocalDate?,
@@ -25,7 +25,7 @@ data class Officer(val name: String,
             name = json.string(ChJson.NAME)!!,
             officerId = json.officerId() ?: officerId,
             role = json.string(ChJson.OFFICER_ROLE)!!,
-            dateOfBirth = PartialDate.fromField(json[ChJson.DATE_OF_BIRTH]),
+            dateOfBirth = ChkPartialDate.fromField(json[ChJson.DATE_OF_BIRTH]),
             address = Address.fromRecord(json)!!,
 
             appointedOn = if (json.string(ChJson.APPT_ON) != null) {
@@ -67,5 +67,5 @@ data class Officer(val name: String,
 }
 
 data class Appointments(val name: String?,
-                        val dateOfBirth: PartialDate?,
+                        val dateOfBirth: ChkPartialDate?,
                         val appointments: Sequence<Officer>)

@@ -9,23 +9,23 @@ import com.blueanvil.chk.officerId
 data class OfficerInfo(val name: String,
                        val officerId: String,
                        val numberOfAppointments: Int,
-                       val dateOfBirth: PartialDate?) {
+                       val dateOfBirth: ChkPartialDate?) {
 
     constructor(record: JsonObject) : this(
             name = record.name(),
             officerId = record.officerId()!!,
             numberOfAppointments = record.int(ChJson.APPT_COUNT) ?: 0,
-            dateOfBirth = PartialDate.fromField(record[ChJson.DATE_OF_BIRTH]))
+            dateOfBirth = ChkPartialDate.fromField(record[ChJson.DATE_OF_BIRTH]))
 
 }
 
 data class DisqualifiedOfficerInfo(val name: String,
                                    val officerId: String,
-                                   val dateOfBirth: PartialDate?) {
+                                   val dateOfBirth: ChkPartialDate?) {
 
     constructor(record: JsonObject) : this(
             name = record.name(),
             officerId = record.disqualifiedOfficerId()!!,
-            dateOfBirth = PartialDate.fromField(record[ChJson.DATE_OF_BIRTH]))
+            dateOfBirth = ChkPartialDate.fromField(record[ChJson.DATE_OF_BIRTH]))
 
 }

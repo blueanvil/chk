@@ -14,9 +14,9 @@ import java.time.temporal.TemporalField
  * A partial date is a date that has at least a year, but it might not have month or dayOfMonth.
  * @author Cosmin Marginean
  */
-data class PartialDate(val dayOfMonth: Int?,
-                       val month: Int?,
-                       val year: Int) : TemporalAccessor, Serializable, Comparable<PartialDate> {
+data class ChkPartialDate(val dayOfMonth: Int?,
+                          val month: Int?,
+                          val year: Int) : TemporalAccessor, Serializable, Comparable<ChkPartialDate> {
 
     constructor(temporalAccessor: TemporalAccessor) : this(
             if (temporalAccessor.isSupported(ChronoField.DAY_OF_MONTH)) temporalAccessor.getLong(ChronoField.DAY_OF_MONTH).toInt() else null,
@@ -57,7 +57,7 @@ data class PartialDate(val dayOfMonth: Int?,
         } else 0
     }
 
-    override fun compareTo(d: PartialDate): Int {
+    override fun compareTo(d: ChkPartialDate): Int {
         // Check year first, we might not even need to bother with the rest
         if (year < d.year) {
             return -1
@@ -91,21 +91,21 @@ data class PartialDate(val dayOfMonth: Int?,
 
     companion object {
 
-        fun fromField(value: Any?): PartialDate? {
+        fun fromField(value: Any?): ChkPartialDate? {
             if (value == null) {
                 return null
             }
 
             return if (value is String) {
                 try {
-                    PartialDate(DATE_FMT_DASH_YMD.parse(value.replace("T.*".toRegex(), "")))
+                    ChkPartialDate(DATE_FMT_DASH_YMD.parse(value.replace("T.*".toRegex(), "")))
                 } catch (e: DateTimeParseException) {
                     // Because the field value is sometimes "Unknown" or some other crap
                     return null
                 }
             } else {
                 val date = value as JsonObject
-                PartialDate(null, date.int(ChJson.MONTH)!!, date.int(ChJson.YEAR)!!)
+                ChkPartialDate(null, date.int(ChJson.MONTH)!!, date.int(ChJson.YEAR)!!)
             }
         }
     }
